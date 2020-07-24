@@ -20,13 +20,6 @@ export default class Register extends React.Component {
     };
   }
 
-  onChange = (e) => {
-    let user = Object.assign({},this.state.user);
-    user[e.target.name] = e.target.value;
-    this.setState({user});
-  };
-
-
 
   onSubmitUser = (event) => {
     event.preventDefault();
@@ -81,8 +74,8 @@ export default class Register extends React.Component {
 
   handleInput = event => {
     this.setState({
-      usuarios: {
-        ...this.state.usuarios,
+      user: {
+        ...this.state.user,
         [event.target.name]: event.target.value
       }
     });
@@ -93,8 +86,7 @@ export default class Register extends React.Component {
     return (
       <div className="userToRegister ">
         <h3> Crear cuenta </h3>
-        <form  onChange={this.onChange}
-              onInput={this.handleInput}
+        <form onInput={this.handleInput}
               onSubmit={this.onSubmitUser}>
 
           <input name="name" type="text" placeholder="Nombre"  required /> <br/>
