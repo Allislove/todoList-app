@@ -1,5 +1,7 @@
 import React from "react";
 import 'react-toastify/dist/ReactToastify.css';
+// import Login from "./login";
+import axios from 'axios';
 import {toast} from "react-toastify";
 
 toast.configure()
@@ -9,39 +11,47 @@ export default class Register extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      usuarios: {}
+      user: {
+        name: '',
+        lastname: '',
+        email: '',
+        password: ''
+      }
     };
   }
 
-  // componentDidMount() {
-  //   this.addUser()
-  // }
+  onChange = (e) => {
+    let user = Object.assign({},this.state.user);
+    user[e.target.name] = e.target.value;
+    this.setState({user});
+  };
 
-  addUser = () => {
-    let url = "https://academlo-todolist.herokuapp.com/register";
+
+
+  onSubmitUser = (event) => {
+    event.preventDefault();
+    let url = 'https://academlo-todolist.herokuapp.com/register';
     let options = {
       method: "POST",
       headers: {
         "content-type": "application/json"
       },
-      body: JSON.stringify(this.state.usuarios)
+      body: JSON.stringify(this.state.user)
     };
 
     fetch(url, options)
       .then(response => {
         return response.json;
       })
-      .then(() => {
-      })
       .then(myJson => {
         this.notify();
-        console.log("Registro exitoso");
-
       })
       .catch(error=> {
         this.notifyError();
       });
   };
+
+
 
   notify = () => {
       toast.success('🦄 Has sido registrado con exito!', {
@@ -78,16 +88,26 @@ export default class Register extends React.Component {
     });
   };
 
+
   render() {
     return (
-      <div>
-        <form onInput={this.handleInput} onSubmit={this.addUser}>
-          <input name="name" type="text" placeholder="Nombre" />
-          <input name="lastname" type="text" placeholder="Apellido" />
-          <input name="email" type="email" placeholder="Email" />
-          <input name="password" type="password" placeholder="Contraseña" />
-          <input type="submit" />
-        </form>
+      <div className="userToRegister ">
+        <h3> Crear cuenta </h3>
+        <form  onChange={this.onChange}
+              onInput={this.handleInput}
+              onSubmit={this.onSubmitUser}>
+
+          <input name="name" type="text" placeholder="Nombre"  required /> <br/>
+          <input name="lastname" type="text" placeholder="Apellido" required /> <br/>
+          <input name="email" type="email" placeholder="Email" required /> <br/>
+          <input name="password" type="password" placeholder="Contraseña" required /> <br/>
+
+          <div className="createAccount">
+            <input type="submit" value="Registrarse"/> <br/>
+            <small>Ya tienes una cuenta? Logeate. </small>
+          </div>
+
+        </form >
       </div>
     );
   }
