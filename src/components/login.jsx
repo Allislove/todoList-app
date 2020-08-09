@@ -3,8 +3,6 @@ import React from "react";
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 
-import Tasks from './tasks';
-
 toast.configure();
 
 export default class Login extends React.Component {
@@ -12,9 +10,8 @@ export default class Login extends React.Component {
     super(props);
     this.state = {
         user: {email: '', password: ''},
-        isLoggedIn: false,
-    };
 
+    };
   }
 
     notifySucces = () => {
@@ -31,7 +28,7 @@ export default class Login extends React.Component {
     }
 
     notifyError = () => {
-        toast.error('× Error intentando iniciar sesión!', {
+        toast.error('× Error: Revisa tus credenciales!', {
             position: "top-right",
             autoClose: 2000,
             hideProgressBar: false,
@@ -62,13 +59,13 @@ export default class Login extends React.Component {
             .then(myJson => {
                 if(myJson.message === "Email o contraseña incorrectas") {
                     return this.notifyError();
-                } if (myJson.results === "Las credenciales son correctas") {
-                    // this.setState.isLoggedIn = true;
-                    return this.notifySucces();
+                } else{
+                    // this.setState({ isLoggedIn: true });
+                    this.notifySucces();
+                    this.props.isLogged();
                 }
             })
             .catch(error => {
-                // return this.notifyError();
                 console.log(error);
             });
     };
@@ -86,12 +83,12 @@ export default class Login extends React.Component {
         });
     };
 
-    /*isLogged(props) {
-        const LoggedIn = props.isLoggedIn;
-        if (LoggedIn) {
-            return <Tasks />;
-        }
-    } */
+    // isLogged = () => {
+    //     const LoggedIn = this.state.isLoggedIn;
+    //     if (LoggedIn === true) {
+    //         return <Tasks />;
+    //     }
+    // }
 
     // handleSubmit = event => {
     //     alert('Bienvenido: ' + this.state.user.name);
@@ -109,8 +106,8 @@ export default class Login extends React.Component {
             <form onInput={this.handleInput}
                   onSubmit={this.loginUser}>
 
-            <input name="email" type="email" placeholder="Email" /><br/>
-            <input name="password" type="password" placeholder="Contraseña" /><br/>
+            <input name="email" type="email" placeholder="Email" required /><br/>
+            <input name="password" type="password" placeholder="Contraseña" required /><br/>
             <input className="btn btn-secondary mt-1" type="submit" value="Entrar"
             /> <br/>
 
@@ -119,13 +116,6 @@ export default class Login extends React.Component {
                     ¿No tienes cuenta aún? Registrate. </a>
 
           </form>
-
-          <div> 
-          <Tasks /> 
-    
-          </div>
-           
-
         </div>
     );
   }

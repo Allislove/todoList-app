@@ -1,7 +1,7 @@
 import React from "react";
 import 'react-toastify/dist/ReactToastify.css';
-import Login from "./login";
-import axios from 'axios';
+// import Login from "./login";
+// import axios from 'axios';
 import {toast} from "react-toastify";
 toast.configure()
 
@@ -105,7 +105,6 @@ export default class Register extends React.Component {
   render() {
     const ref = "#";
     return (
-
       <div >
         <h3> Crear cuenta </h3>
         <form onInput={this.handleInput}

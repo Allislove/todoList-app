@@ -6,10 +6,11 @@ import "react-datepicker/dist/react-datepicker.css"; // css de las fechas del pa
 export default class AddTask extends React.Component {
     constructor(props) {
         super(props);
-        // Con el primer estado guardamos las tareas en la API
         this.state = {
-            startDate: new Date(),
-            taskAdded: {},
+            taskAdded: {
+                content: '',
+                date: new Date(),
+            },
         }
     }
 
@@ -32,8 +33,9 @@ export default class AddTask extends React.Component {
                 return response.json();
             })
             .then(datos => {
+                // llamo como props las tareas para recibirlas aqui
+                // this.props.isLogged();
                 console.log(datos);
-                // this.props.obtenerTareas();
             })
             .catch(error => {
                 console.log(error);
@@ -44,19 +46,26 @@ export default class AddTask extends React.Component {
     handleInput = event => {
         this.setState({
             taskAdded: {
-                // generamos el nuevo estado, con un sprite operator, para que siempre que
-                // agreguemos un dato al formulario, se vayan guardando todos los datos
                 ...this.state.taskAdded,
                 [event.target.name]: event.target.value
             }
         });
     };
 
-    handleChange = date => {
+    handleChange = (newDate) => {
         this.setState({
-            startDate: date
+            taskAdded: {
+                ...this.state.taskAdded,
+                date: newDate,
+            },
         });
     };
+
+    // handleChange = date => {
+    //     this.setState({
+    //         startDate: date
+    //     });
+    // };
 
     // datePicker = () => {
     // const [startDate, setStartDate] = useState(new Date());
@@ -70,16 +79,18 @@ export default class AddTask extends React.Component {
             <div>
                 <form className="formulario" onInput={this.handleInput} onSubmit={this.addTask}>
                     <h3> Agregar Tarea </h3>
-                    <input name="content" type="text" placeholder="¿Qué necesitas hacer?" /> <br/>
+                    <input name="content" type="text" placeholder="¿Qué necesitas hacer?" required /> <br/>
                     <DatePicker
-                        selected={this.state.startDate}
+                        selected={this.state.taskAdded.date}
                         onChange={this.handleChange}
                     /> <br/>
                     {/* El userId debe generarse solo */}
                     <button className="btn btn-success mt-2" type="submit">
-                        Añadir Tarea{this.state.taskAdded.length + 1}
+                        Añadir #  {/*{this.props.tareas.results.length +1} */}
                     </button>
-                        {/*<input className="btn btn-success mt-2" type="submit"  value="Agregar tarea #" {this.state.taskAdded.length + 1} />*/}
+                    {/*<button className="btn btn-success mt-2" type="submit">*/}
+                    {/*    Actualizar*/}
+                    {/*</button>*/}
                 </form>
             </div>
 

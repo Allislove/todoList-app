@@ -20,7 +20,6 @@ class App extends React.Component {
       loading: true,
       open: false,
       usuarios: [],
-      tasks: []
 
     };
   }
@@ -33,10 +32,6 @@ class App extends React.Component {
 
   }
 
-  componentWillUnmount() {
-    this.setState({loading: true})
-  }
-
 
   mostrarCarga = () => {
     this.setState({ loading: true });
@@ -45,6 +40,7 @@ class App extends React.Component {
   rand = () => {
     return Math.round(Math.random() * 20) - 10;
   };
+
 
   //Cuando presionen el boton o enlace de login quiero que me el estado se pase a true, entonces
     //cuando este sea true, muestrame el componente login
@@ -73,13 +69,12 @@ class App extends React.Component {
           <div>
             {/*<Navbar />*/}
             <Modal />
-            {/*<Register />*/}
-            {/*<Login />*/}
           </div>
         </div>
       );
     }
   }
 }
+
 
 export default App;
