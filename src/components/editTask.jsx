@@ -8,43 +8,36 @@ export default function EditTask (props){
 
 
     return (
-        <div >
-            <form onSubmit={props.updatedTodo}  onInput={props.inputTodoToEdit}>
-                <div className="align-items-center form-group">
-                    <h3>Editar tarea</h3>
-                    <div>
-                        <input name="content"
-                               type="text"
-                               placeholder="Contenido"
-                               value={content}
-                               required
-                            />
+        <div className="container-fluid mt-5 p-md-2">
+            <div className="row">
+                <div className="col-md-4 col-sm-4 col-xs-12" ></div>
+                    <div className="col-md-4 col-sm-4 col-xs-12" >
+                        <form onSubmit={props.updatedTodo}  onInput={props.inputTodoToEdit}>
+                            <h3>Editar tarea</h3>
+                                <div className="form-group" >
+                                    <input className="form-control"
+                                            name="content"
+                                        type="text"
+                                        placeholder="Contenido"
+                                        value={content}
+                                        required
+                                        />
+                                </div>
+                                <div className="form-group">
+                                    <DatePicker className="form-control"
+                                        selected={props.selected}
+                                        onChange={props.onChange}
+                                    />
+                                </div>
 
-                    </div>
-                    <div>
-                        {/*<input name="date"*/}
-                        {/*       type="date"*/}
-                        {/*       placeholder="Fecha"*/}
-                        {/*       value={date}*/}
-                        {/*       required*/}
-                        {/*/>*/}
-
-                        <DatePicker
-                            selected={props.selected}
-                            onChange={props.onChange}
-                        />
-
-                        <br/>
-                    </div>
-
-                    <div>
-                        <input className="btn btn-secondary mt-2"
-                               type="submit"
-                               value="Actualizar tarea" />
+                                         <button className="btn btn-secondary mt-2" type="submit">
+                                        Actualizar tarea  {/*{this.props.tareas.results.length +1} */}
+                                        </button> 
+                                     
+                       </form>
                     </div>
                 </div>
-            </form>
-        </div>
+            </div>
 
 
     );

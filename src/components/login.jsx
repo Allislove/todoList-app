@@ -1,7 +1,8 @@
 import React from "react";
 
-import { toast } from 'react-toastify'
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 toast.configure();
 
@@ -37,13 +38,13 @@ export default class Login extends React.Component {
             draggable: true,
             progress: undefined,
         });
-
     }
 
     loginUser = event => {
         event.preventDefault();
         event.target.reset();
-        let url = "https://academlo-todolist.herokuapp.com/login" ;
+       // https://academlo-todolist.herokuapp.com
+        let url = "/login" ;
         let options = {
             method: "POST",
             headers: {
@@ -101,22 +102,29 @@ export default class Login extends React.Component {
   render() {
       const ref = "#";
     return (
-        <div className={"container"}>
-            <h3> Iniciar sesion  </h3>
-            <form onInput={this.handleInput}
-                  onSubmit={this.loginUser}>
+        <div className="container-fluid mt-5">
+                    <h3> Iniciar sesion  </h3>
+            <div className="row">
+                <div className="col-md-4 col-sm-4 col-xs-12" ></div>
+                    <div className="col-md-4 col-sm-4 col-xs-12" >
+                        <form onInput={this.handleInput}
+                            onSubmit={this.loginUser}>
+                      <div className="form-group"> 
+                        <input className="form-control" name="email" type="email" placeholder="Email" required />
+                      </div>
+                      <div className="form-group"> 
+                        <input className="form-control" name="password" type="password" placeholder="Contraseña" required />
+                      </div>
+                        <input className="btn btn-secondary mt-1" type="submit" value="Entrar"
+                        /> <br/>
+                        <a onClick={this.props.comeBackToRegister}
+                        href={ref}>
+                            ¿No tienes cuenta aún? Registrate. </a>
 
-            <input name="email" type="email" placeholder="Email" required /><br/>
-            <input name="password" type="password" placeholder="Contraseña" required /><br/>
-            <input className="btn btn-secondary mt-1" type="submit" value="Entrar"
-            /> <br/>
-
-                <a onClick={this.props.comeBackToRegister}
-                   href={ref}>
-                    ¿No tienes cuenta aún? Registrate. </a>
-
-          </form>
+                </form>
+            </div>
         </div>
+    </div>
     );
   }
 }

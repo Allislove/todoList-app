@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Button } from 'reactstrap';
-
+//import 'bootstrap/dist/css/bootstrap.min.css';
 import Modal from './components/modal';
 import Loading from "./components/loading";
 // import {Navbar} from './components/Navbar/navbar';

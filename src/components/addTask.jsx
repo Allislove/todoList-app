@@ -1,6 +1,13 @@
 import React from 'react';
 import DatePicker from 'react-datepicker'; // Importo el paquete para manejar las fechas
 import "react-datepicker/dist/react-datepicker.css"; // css de las fechas del paquete datpic
+import { toast } from 'react-toastify'
+
+
+
+
+import 'react-toastify/dist/ReactToastify.css';
+toast.configure();
 
 
 export default class AddTask extends React.Component {
@@ -33,9 +40,12 @@ export default class AddTask extends React.Component {
                 return response.json();
             })
             .then(datos => {
-                // llamo como props las tareas para recibirlas aqui
-                // this.props.isLogged();
-                console.log(datos);
+                if(datos.message === "La tarea se ha agregado correctamente en el sistema") {
+                    return this.notifySucces();
+                } else {
+                    return this.notifyError("ERROR AL AÑADIR TAREA");
+                }
+                //console.log(datos);
             })
             .catch(error => {
                 console.log(error);
@@ -61,39 +71,69 @@ export default class AddTask extends React.Component {
         });
     };
 
-    // handleChange = date => {
-    //     this.setState({
-    //         startDate: date
-    //     });
-    // };
+    obtenerDate = () => {
+        let dateP = this.state.taskAdded.date;
+    }
 
-    // datePicker = () => {
-    // const [startDate, setStartDate] = useState(new Date());
-    // return (
-    //     <DatePicker selected={startDate} onChange={date => setStartDate(date)} />
-    //     );
-    // };
+
+
+    notifySucces = (error) => {
+        toast.success('🦄 Tarea agregada con éxito!', {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
+
+    }
+
+    notifyError = () => {
+        toast.error('× Error al agregar la tarea!', {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
+    }
+
+
 
     render() {
         return(
-            <div>
-                <form className="formulario" onInput={this.handleInput} onSubmit={this.addTask}>
-                    <h3> Agregar Tarea </h3>
-                    <input name="content" type="text" placeholder="¿Qué necesitas hacer?" required /> <br/>
-                    <DatePicker
-                        selected={this.state.taskAdded.date}
-                        onChange={this.handleChange}
-                    /> <br/>
-                    {/* El userId debe generarse solo */}
-                    <button className="btn btn-success mt-2" type="submit">
-                        Añadir #  {/*{this.props.tareas.results.length +1} */}
-                    </button>
-                    {/*<button className="btn btn-success mt-2" type="submit">*/}
-                    {/*    Actualizar*/}
-                    {/*</button>*/}
-                </form>
-            </div>
-
+                <div className="container-fluid mt-5">
+                        <div className="row">
+                            <div className="col-md-6 col-sm-6 col-xs-10" ></div>
+                                <div className="col-md-6 col-sm-6 col-xs-10">
+                                    <form className="formulario" 
+                                        onInput={this.handleInput} 
+                                        onSubmit={this.addTask}>
+                                        <h3> Agregar Tarea </h3>
+                                        <div className="form-group mt-2 ">
+                                            <input className="form-control" 
+                                            name="content" 
+                                            type="text" 
+                                            placeholder="¿Qué necesitas hacer?" 
+                                            required />
+                                        </div>
+                                        <div className="form-group">
+                                            <DatePicker className="form-control"
+                                                selected={this.state.taskAdded.date}
+                                                onChange={this.handleChange}
+                                            />
+                                        </div>                                      
+                                        <button className="btn btn-success mt-2" type="submit">
+                                            Añadir #  {/*{this.props.tareas.results.length +1} */}
+                                        </button>                  
+                                    </form>
+                            </div>
+                        </div>
+                </div>
 
         );
     }
